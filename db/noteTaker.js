@@ -38,3 +38,5 @@ class NoteTaker {
             .then((newNotes) => this.writeNotes(newNotes)).then(() => newNote);
     }
 }
+
+module.exports = new NoteTaker();
