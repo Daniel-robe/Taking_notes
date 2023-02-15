@@ -14,13 +14,17 @@ class NoteTaker {
     }
 
     getNotes() {
-        let notesList = [];
+        return this.readNotes().then((notes) => {
+            let readNotes;
 
-        this.readNotes().then((notes) => {
-            notesList.concat(JSON.parse(notes));
-        })
+            try{
+                readNotes = [].concat(JSON.parse(notes));
+            } catch (err) {
+                readNotes = [];
+            }
 
-        return notesList
+            return readNotes;
+        });
     }
 
     addNote(note) {
@@ -32,7 +36,7 @@ class NoteTaker {
             throw new Error("Note text cant be empty");
         }
 
-        newNote = {title, text}
+        let newNote = {title, text}
 
         return this.getNotes().then((notes) => [...notes, newNote])
             .then((newNotes) => this.writeNotes(newNotes)).then(() => newNote);
